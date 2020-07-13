@@ -75,7 +75,12 @@
             <div class="image fit">
               <img src="images/logo.png" alt="cube3 logo" />
             </div>
-            <p>Small satellite that fits within a can sized cylinder. This is the recommended project for people new to programming or firmware development. This group overviews the basics of cube/can satellites in order to get a more wholesitic idea of the project.</p>
+            <p>
+              Small satellite that fits within a can sized cylinder. This is the
+              recommended project for people new to programming or firmware
+              development. This group overviews the basics of cube/can
+              satellites in order to get a more wholesitic idea of the project.
+            </p>
           </div>
         </article>
         <article class="alt">
@@ -87,7 +92,12 @@
               <img src="images/logo.png" alt="cube3 logo 2" />
             </div>
             <p>
-              A 3U cube satellite project that will be able to house a hyper-spectral imaging camera developed by SJSU undergrad students for senior project. This project will require a lot of research into cube satellites as parts must be purchased to complete the project. Recommended for those familiar with satellites or strong firmware knowledge.
+              A 3U cube satellite project that will be able to house a
+              hyper-spectral imaging camera developed by SJSU undergrad students
+              for senior project. This project will require a lot of research
+              into cube satellites as parts must be purchased to complete the
+              project. Recommended for those familiar with satellites or strong
+              firmware knowledge.
             </p>
           </div>
         </article>
@@ -150,8 +160,8 @@
       <div class="inner">
         <header>
           <h2>Interest Form</h2>
-        </header>
-        <form method="post" action="#">
+		</header>
+        <form action="#">
           <!-- Name & Email -->
           <div class="field half first">
             <label for="name">Name</label>
@@ -186,21 +196,101 @@
             <textarea name="message" id="message" rows="6"></textarea>
           </div>
           <ul class="actions">
-            <li><input type="submit" value="Submit" class="alt" /></li>
+            <li>
+              <input
+                type="submit"
+                value="Submit"
+                class="alt"
+				onclick="authenticate().then(loadClient).then(execute)"
+              />
+            </li>
           </ul>
         </form>
         <div class="copyright">
-		  Cube3 at San Jose State University 2020. &ThickSpace;
-		  More info at outreachcube3@gmail.com &ThickSpace;
-		  Template from &copy;<a href="https://templated.co/">TEMPLATED</a>.
+          Cube3 at San Jose State University 2020. &ThickSpace; More info at
+          outreachcube3@gmail.com &ThickSpace; Template from &copy;<a
+            href="https://templated.co/"
+            >TEMPLATED</a
+          >.
         </div>
       </div>
     </section>
     <!-- Scripts -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+      function authenticate() {
+        return gapi.auth2
+          .getAuthInstance()
+          .signIn({
+            scope:
+              "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/spreadsheets",
+          })
+          .then(
+            function () {
+              console.log("Sign-in successful");
+            },
+            function (err) {
+              console.error("Error signing in", err);
+            }
+          );
+      }
+      function loadClient() {
+        gapi.client.setApiKey("AIzaSyAlUugSguK7sOtZrnByLtMUASbVEzKqHNI");
+        return gapi.client
+          .load(
+            "https://content.googleapis.com/discovery/v1/apis/sheets/v4/rest"
+          )
+          .then(
+            function () {
+              console.log("GAPI client loaded for API");
+            },
+            function (err) {
+              console.error("Error loading GAPI client for API", err);
+            }
+          );
+      }
+      // Make sure the client is loaded and sign-in is complete before calling this method.
+      function execute() {
+        return gapi.client.sheets.spreadsheets.values
+          .append({
+			//   Change this to appropriate ID
+            spreadsheetId: "180XdAlprlTmbYMqa7XLeTv7lne_EkQ1lzQNKzcZ8xmI",
+            range: "A1",
+            includeValuesInResponse: true,
+            insertDataOption: "INSERT_ROWS",
+            responseDateTimeRenderOption: "SERIAL_NUMBER",
+            responseValueRenderOption: "FORMATTED_VALUE",
+            valueInputOption: "USER_ENTERED",
+            resource: {
+              range: "A1",
+			  majorDimension: "ROWS",
+			//   Enter in excel data here name, email, github, phone#, shirt size, major
+              values: [["mark", "mark@email.com", "markTheCoder123", "1233218888", "Medium", "Physics"]],
+            },
+          })
+          .then(
+            function (response) {
+              // Handle the results here (response.result has the parsed body).
+              console.log("Response", response);
+            },
+            function (err) {
+              console.error("Execute error", err);
+            }
+          );
+      }
+      gapi.load("client:auth2", function () {
+        gapi.auth2.init({
+          client_id:
+            "119016497956-c2naalbd8opqs4fljf0gebe7d4j882qg.apps.googleusercontent.com",
+        });
+      });
+    </script>
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/skel.min.js"></script>
     <script src="./assets/js/util.js"></script>
-	<script src="./assets/js/main.js"></script>
-	<script src="./assets/js/data_handler.js"></script>
+    <script src="./assets/js/main.js"></script>
+<!-- Try and implement the data_handler file to clean up index.html -->
+    <!-- <script src="https://apis.google.com/js/api.js"></script> -->
+    <!-- <script src="./assets/js/data_handler.js"></script> -->
   </body>
 </html>
