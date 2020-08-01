@@ -15,7 +15,7 @@ function authenticate() {
     );
 }
 function loadClient() {
-  gapi.client.setApiKey("AIzaSyAlUugSguK7sOtZrnByLtMUASbVEzKqHNI");
+  gapi.client.setApiKey("#");
   return gapi.client
     .load("https://content.googleapis.com/discovery/v1/apis/sheets/v4/rest")
     .then(
@@ -43,7 +43,7 @@ function execute() {
   return gapi.client.sheets.spreadsheets.values
     .append({
       //   Change this to appropriate ID
-      spreadsheetId: "180XdAlprlTmbYMqa7XLeTv7lne_EkQ1lzQNKzcZ8xmI",
+      spreadsheetId: "#",
       range: "A1",
       includeValuesInResponse: true,
       insertDataOption: "INSERT_ROWS",
@@ -71,6 +71,6 @@ function execute() {
 gapi.load("client:auth2", function () {
   gapi.auth2.init({
     client_id:
-      "119016497956-c2naalbd8opqs4fljf0gebe7d4j882qg.apps.googleusercontent.com",
+      "#",
   });
 });
