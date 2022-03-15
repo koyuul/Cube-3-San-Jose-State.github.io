@@ -1,0 +1,17 @@
+html{
+    font: inherit;
+}
+
+body{
+    background-color: #00080F;
+    color: white;
+    text-align: left;
+}
+
+h2{
+    margin: 0 0 0 4vw;
+}
+
+p{
+    margin: 0 6vw 0;
+}
